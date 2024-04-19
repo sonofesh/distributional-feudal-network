@@ -26,10 +26,12 @@ def train(
         log_dir,
         lock,
         optimizer,
-        args):
+        run_params):
+            
+    args = type('Namespace', (), run_params)
     seed = args.seed + rank
     torch.manual_seed(seed)
-
+    
     env = create_atari_env(args.env_name)
     env.seed(seed)
     model = FeudalNet(env.observation_space, env.action_space, channel_first=True)
